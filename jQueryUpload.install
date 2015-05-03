@@ -1,0 +1,12 @@
+<?php
+
+function jQueryUpload_install() {
+  drupal_set_message('Install successfully.');
+}
+
+function jQueryUpload_uninstall() {
+  drupal_set_message('Uninstall successfully.');
+}
+
+
+?>

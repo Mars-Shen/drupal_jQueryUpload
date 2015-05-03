@@ -1,0 +1,73 @@
+<?php
+define('FILE_UPLOAD_KEY', 'file_upload_process_key_');
+/**
+ * @file
+ * 
+ * This is the counselee module
+ * 
+ * 
+ */
+function jQueryUpload_menu() {
+    $items['jQueryUploadURL'] = array(
+        'title' => 'Uploading...',
+        'page callback' => 'jQueryUploadURL',
+        'page arguments' => array(),
+        'type' => MENU_CALLBACK,
+        'file' => 'files/jQueryUpload.pages.inc',
+        'weight' => 5,
+        'access callback' => TRUE,
+    );
+    $items['getProcessNumber'] = array(
+        'title' => 'Uploading...',
+        'page callback' => 'get_process_bar_number',
+        'page arguments' => array(),
+        'type' => MENU_CALLBACK,
+        'file' => 'files/jQueryUpload.pages.inc',
+        'weight' => 6,
+        'access callback' => TRUE,
+    );
+  return $items;
+}
+
+function jQueryUpload_element_info() {
+    $types['jQuery_upload'] = array(
+        // This is an HTML <input>.
+        '#input' => TRUE,
+
+        // Use theme('form_example_checkbox') to render this element on output.
+        '#theme' => 'jQuery_upload_t',
+    );
+    return $types;
+}
+function jQueryUpload_theme($existing, $type, $theme, $path) {
+    return array(
+        'jQuery_upload_t' => array(
+            'render element' => 'element',
+        ),
+    );
+}
+function theme_jQuery_upload_t($variables) {
+    $element = $variables['element'];
+    $input = '<input id="fileupload" type="file" name="files[]" multiple>';
+
+    $input.= '<div id="progress" class="progress-animated process-parent" style="display:none">
+                <div id="progress" class="bar-father">
+                     <div class="bar" id="process_bar" style="width:0"></div>
+                     <div class="bar-tip" id="process_bar_tip">uploading...</div>
+                     <div class="bar-text" id="process_bar_text">0%</div>
+                </div>
+            </div>';
+    return $input;
+}
+
+function jQueryUpload_init() {
+    drupal_add_css(drupal_get_path('module', 'jQueryUpload').'/css/jquery.fileupload.css');
+    drupal_add_css(drupal_get_path('module', 'jQueryUpload').'/css/jquery.fileupload-ui.css');
+    drupal_add_css(drupal_get_path('module', 'jQueryUpload').'/css/custom.css');
+
+    drupal_add_js(drupal_get_path('module', 'jQueryUpload').'/js/vendor/jquery.ui.widget.js');
+    drupal_add_js(drupal_get_path('module', 'jQueryUpload').'/js/jquery.iframe-transport.js');
+    drupal_add_js(drupal_get_path('module', 'jQueryUpload').'/js/jquery.fileupload.js');
+    drupal_add_js(drupal_get_path('module', 'jQueryUpload').'/js/uploadFileCustom.js');
+}
+

@@ -1,0 +1,5 @@
+name = jQuery Upload Module
+description = Upload file through jQuey way
+package = "Perficient"
+core = 7.x
+version = 7.x-1.0-dev
