@@ -46,11 +46,14 @@ function jQueryUploadURL($variables) {
               // Create our message variables.
               $files = array('file' => $ok['file']);
               // Make sure at least one module implements our hook.
+              $return_valArr =   array('status'=>'success','file'=>$files);
               if (sizeof(module_implements('process_file')) > 0) {
                 // Call all modules that implement the hook, and let them make changes to $variables.
                 $result = module_invoke_all('process_file', $files);
+                  if(!$result){
+                      $return_valArr =   array('status'=>'error','msg'=>'error happended when process file...');
+                  }
               }
-              $return_valArr =   array('status'=>'success','file'=>$file);
               saveAndRetrieve_session(FILE_UPLOAD_KEY.$user->uid,0,'processing file...');
               return drupal_json_output($return_valArr);
         }else {
