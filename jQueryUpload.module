@@ -1,5 +1,6 @@
 <?php
 define('FILE_UPLOAD_KEY', 'file_upload_process_key_');
+
 /**
  * @file
  * 
@@ -58,6 +59,20 @@ function theme_jQuery_upload_t($variables) {
                 </div>
             </div>';
     return $input;
+}
+
+
+function saveAndRetrieve_session($key, $percentage = NULL,$message = NULL) {
+    $cache_key = md5(serialize(($key)));
+    if($percentage||$message) {
+        $value = $percentage.'_'.$message;
+        cache_set($cache_key, $value);
+    } else {
+        if($cached = cache_get($cache_key)){
+            $data = $cached->data;
+            return $data;
+        }
+    }
 }
 
 function jQueryUpload_init() {

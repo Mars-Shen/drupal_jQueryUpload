@@ -92,22 +92,6 @@ function get_process_bar_number(){
         return drupal_json_output($jsonArr);
     }
 }
-
-
-function saveAndRetrieve_session($key, $percentage = NULL,$message = NULL) {
-    $cache_key = md5(serialize(($key)));
-    if($percentage||$message) {
-      $value = $percentage.'_'.$message;
-      cache_set($cache_key, $value);
-    } else {
-        if($cached = cache_get($cache_key)){
-            $data = $cached->data;
-            return $data;
-        }
-    }
-}
-
-
 function file_save_upload_for_jquery_upload($form_field_name, $validators = array(), $destination = FALSE, $replace = FILE_EXISTS_RENAME) {
     global $user;
     static $upload_cache;
